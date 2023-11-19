@@ -6,13 +6,13 @@ using Microsoft.EntityFrameworkCore;
 var builder = new StreamerDbContextFactory();
 await using var dbContext = builder.CreateDbContext(args);
 
-await AddNewRecords();
+await AddNewRecords(dbContext);
 QueryStreamers(dbContext);
 return;
 
-void QueryStreamers(StreamerDbContext dbcontext)
+void QueryStreamers(StreamerDbContext contextDb)
 {
-    var videos = dbcontext.Videos?.Include(video => video.Streamer).ToList();
+    var videos = contextDb.Videos?.Include(video => video.Streamer).ToList();
     if (videos is null) return;
     foreach (var video in videos)
     {
@@ -23,7 +23,7 @@ void QueryStreamers(StreamerDbContext dbcontext)
     }
 }
 
-async Task AddNewRecords()
+async Task AddNewRecords(StreamerDbContext contextDb)
 {
     var streamer = new Streamer()
     {
@@ -31,8 +31,8 @@ async Task AddNewRecords()
         Url = "https://www.disneyplus.com/",
     };
     
-    dbContext?.Streamers?.Add(streamer);
-    await dbContext?.SaveChangesAsync()!;
+    contextDb.Streamers?.Add(streamer);
+    await contextDb.SaveChangesAsync();
     
     var movies = new List<Video>()
     {
@@ -62,6 +62,6 @@ async Task AddNewRecords()
         },
     };
     
-    await dbContext?.Videos?.AddRangeAsync(movies)!;
-    await dbContext?.SaveChangesAsync()!;
+    await contextDb.Videos?.AddRangeAsync(movies)!;
+    await contextDb.SaveChangesAsync();
 }
