@@ -11,7 +11,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace CleanArchitecture.Data.Migrations
 {
     [DbContext(typeof(StreamerDbContext))]
-    [Migration("20231119224634_InitialMigration")]
+    [Migration("20231119230452_InitialMigration")]
     partial class InitialMigration
     {
         /// <inheritdoc />
