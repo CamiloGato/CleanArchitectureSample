@@ -6,8 +6,7 @@ using Microsoft.EntityFrameworkCore;
 var builder = new StreamerDbContextFactory();
 await using var dbContext = builder.CreateDbContext(args);
 
-await AddNewRecords(dbContext);
-QueryStreamers(dbContext);
+await QueryFilter(dbContext, "Netflix");
 return;
 
 void QueryStreamers(StreamerDbContext contextDb)
@@ -64,4 +63,33 @@ async Task AddNewRecords(StreamerDbContext contextDb)
     
     await contextDb.Videos?.AddRangeAsync(movies)!;
     await contextDb.SaveChangesAsync();
+}
+
+async Task QueryFilter(StreamerDbContext contextDb, string filterName)
+{
+    var streamers = await contextDb.Streamers!
+        .Where(streamer => streamer.Name == filterName).ToListAsync();
+
+    foreach (Streamer streamer in streamers)
+    {
+        Console.WriteLine($"Streamer: {streamer.Name}");
+        Console.WriteLine($"Url: {streamer.Url}");
+        Console.WriteLine();
+    }
+    
+    // var streamerPartialResult = await contextDb.Streamers!
+    //     .Where( streamer => streamer.Name!.Contains(filterName)).ToListAsync();
+    
+    var streamerPartialResult = await contextDb.Streamers!
+        .Where( streamer => 
+            EF.Functions.Like(streamer.Name, $"%{filterName}%")
+        ).ToListAsync();
+    
+    foreach (Streamer streamer in streamerPartialResult)
+    {
+        Console.WriteLine($"Streamer: {streamer.Name}");
+        Console.WriteLine($"Url: {streamer.Url}");
+        Console.WriteLine();
+    }
+    
 }
