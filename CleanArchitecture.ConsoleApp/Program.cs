@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore;
 var builder = new StreamerDbContextFactory();
 await using var dbContext = builder.CreateDbContext(args);
 
-await QueryFilter(dbContext, "Netflix");
+await TrackingAndNotTracking(dbContext);
 return;
 
 void QueryStreamers(StreamerDbContext contextDb)
@@ -92,4 +92,59 @@ async Task QueryFilter(StreamerDbContext contextDb, string filterName)
         Console.WriteLine();
     }
     
+}
+
+async Task QueryMethods(StreamerDbContext contextDb, string find, int primaryKey)
+{
+    var streamers = contextDb.Streamers!;
+    
+    var streamerExist = await streamers.Where(
+        y => y.Name!.Contains(find)    
+    ).FirstAsync();
+    
+    var streamerDefault = await streamers.Where(
+        y => y.Name!.Contains(find)    
+    ).FirstOrDefaultAsync();
+
+    var streamerFirstOrDefaultMethod = await streamers.FirstOrDefaultAsync(
+        y => y.Name!.Contains(find)
+    );
+
+    var streamerSingle = await streamers.SingleAsync(
+        y => y.Name!.Contains(find)
+    );
+    
+    var streamerSingleOrDefault = await streamers.SingleOrDefaultAsync(
+        y => y.Name!.Contains(find)
+    );
+
+    var streamerFindPrimaryKey = await streamers.FindAsync(
+        primaryKey
+    );
+}
+
+async Task QueryLinq(StreamerDbContext contextDb, string find)
+{
+    var streamers = await (
+        from i in contextDb.Streamers!
+        where EF.Functions.Like(i.Name, $"%{find}%")
+        select i
+    ).ToListAsync();
+}
+
+async Task TrackingAndNotTracking(StreamerDbContext contextDb)
+{
+    var streamerWithTracking = await contextDb.Streamers!.FirstOrDefaultAsync(
+        x => x.Id == 1
+    );
+    
+    
+    var streamerWithNoTracking = await contextDb.Streamers!.AsNoTracking().FirstOrDefaultAsync(
+        x => x.Id == 2
+    );
+
+    streamerWithTracking!.Name = "Netflix";
+    streamerWithNoTracking!.Name = "Amazon Prime 2";
+
+    await dbContext!.SaveChangesAsync();
 }
