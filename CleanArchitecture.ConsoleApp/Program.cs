@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore;
 var builder = new StreamerDbContextFactory();
 await using var dbContext = builder.CreateDbContext(args);
 
-await TrackingAndNotTracking(dbContext);
+await MultipleEntitiesQuery(dbContext);
 return;
 
 void QueryStreamers(StreamerDbContext contextDb)
@@ -147,4 +147,91 @@ async Task TrackingAndNotTracking(StreamerDbContext contextDb)
     streamerWithNoTracking!.Name = "Amazon Prime 2";
 
     await dbContext!.SaveChangesAsync();
+}
+
+async Task AddNewStreamerWithVideo(StreamerDbContext contextDb)
+{
+    var cuevana = new Streamer()
+    {
+        Name = "Cuevana",
+    };
+    
+    var hungerGames = new Video()
+    {
+        Name = "Hunger Games",
+        Streamer = cuevana
+    };
+
+    await contextDb.AddAsync(hungerGames);
+    await contextDb.SaveChangesAsync();
+}
+
+async Task AddNewStreamerWithVideoId(StreamerDbContext contextDb)
+{
+    var batmanForever = new Video()
+    {
+        Name = "Batman Forever",
+        StreamerId = 4,
+    };
+
+    await contextDb.AddAsync(batmanForever);
+    await contextDb.SaveChangesAsync();
+}
+
+async Task AddNewActorWithVideo(StreamerDbContext contextDb)
+{
+    var actor = new Actor()
+    {
+        Name = "Brad",
+        LastName = "Pitt"
+    };
+    
+    await contextDb.AddAsync(actor);
+    await contextDb.SaveChangesAsync();
+    
+    var videoActor = new VideoActor()
+    {
+        ActorId = actor.Id,
+        VideoId = 1,
+    };
+
+    await contextDb.AddAsync(videoActor);
+    await contextDb.SaveChangesAsync();
+}
+
+async Task AddNewDirectorWithVideo(StreamerDbContext contextDb)
+{
+    var director = new Director()
+    {
+        Name = "Lorenzo",
+        LastName = "Basteri",
+        VideoId = 1,
+    };
+
+    await contextDb.AddAsync(director);
+    await contextDb.SaveChangesAsync();
+
+}
+
+async Task MultipleEntitiesQuery(StreamerDbContext contextDb)
+{
+    var videoWithActors = await contextDb.Videos!
+        .Include(q => q.Actors)
+        .FirstOrDefaultAsync(q => q.Id == 1);
+
+    var actor = await contextDb.Videos!
+        .Select(q => q.Name)
+        .ToListAsync();
+
+    var videoWithDirector = await contextDb.Videos!
+        .Where( q => q.Director != null )
+        .Include(q => q.Director)
+        .Select(q =>
+            new
+            {
+                DirectorName = $"{q.Director!.Name} {q.Director!.LastName}",
+                VideoName = q.Name
+            }
+        )
+        .ToListAsync();
 }
