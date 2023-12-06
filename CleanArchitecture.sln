@@ -1,10 +1,24 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CleanArchitecture.ConsoleApp", "CleanArchitecture.ConsoleApp\CleanArchitecture.ConsoleApp.csproj", "{48F248A8-59A7-4B2A-B262-DB2212A95098}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CleanArchitecture.Data", "CleanArchitecture.Data\CleanArchitecture.Data.csproj", "{BF568961-9497-44D7-ADC0-FC296C4EEF47}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CleanArchitecture.Infrastructure", "CleanArchitecture.Infrastructure\CleanArchitecture.Infrastructure.csproj", "{BF568961-9497-44D7-ADC0-FC296C4EEF47}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CleanArchitecture.Domain", "CleanArchitecture.Domain\CleanArchitecture.Domain.csproj", "{956B80FA-8B16-4924-90C6-7ED1BBABA4C6}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{8F7B1153-A1E0-45B1-9EDC-0A1BD3B6CB33}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "doc", "doc", "{A2E1F545-FA58-4906-9184-CF3869DFAEBF}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{DC2B9CA5-3E87-4B8E-82DB-E48FD3ECA815}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "API", "API", "{D5CE8753-1135-4399-8BAB-00A9076836AF}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Core", "Core", "{8C328D96-F81A-4552-A3B5-7AB1747D2BB8}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Infrastructure", "Infrastructure", "{C42DB89F-B651-46A5-9999-F93AF70B71C5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CleanArchitecture.API", "CleanArchitecture.API\CleanArchitecture.API.csproj", "{7978F7EE-AD76-48D2-BF1B-B7927E83BCCF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CleanArchitecture.Application", "CleanArchitecture.Application\CleanArchitecture.Application.csproj", "{376E96AD-F89F-4140-B00B-9A154B1A69C1}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -12,10 +26,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{48F248A8-59A7-4B2A-B262-DB2212A95098}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{48F248A8-59A7-4B2A-B262-DB2212A95098}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{48F248A8-59A7-4B2A-B262-DB2212A95098}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{48F248A8-59A7-4B2A-B262-DB2212A95098}.Release|Any CPU.Build.0 = Release|Any CPU
 		{BF568961-9497-44D7-ADC0-FC296C4EEF47}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{BF568961-9497-44D7-ADC0-FC296C4EEF47}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BF568961-9497-44D7-ADC0-FC296C4EEF47}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -24,5 +34,22 @@ Global
 		{956B80FA-8B16-4924-90C6-7ED1BBABA4C6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{956B80FA-8B16-4924-90C6-7ED1BBABA4C6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{956B80FA-8B16-4924-90C6-7ED1BBABA4C6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7978F7EE-AD76-48D2-BF1B-B7927E83BCCF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7978F7EE-AD76-48D2-BF1B-B7927E83BCCF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7978F7EE-AD76-48D2-BF1B-B7927E83BCCF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7978F7EE-AD76-48D2-BF1B-B7927E83BCCF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{376E96AD-F89F-4140-B00B-9A154B1A69C1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{376E96AD-F89F-4140-B00B-9A154B1A69C1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{376E96AD-F89F-4140-B00B-9A154B1A69C1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{376E96AD-F89F-4140-B00B-9A154B1A69C1}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{D5CE8753-1135-4399-8BAB-00A9076836AF} = {8F7B1153-A1E0-45B1-9EDC-0A1BD3B6CB33}
+		{8C328D96-F81A-4552-A3B5-7AB1747D2BB8} = {8F7B1153-A1E0-45B1-9EDC-0A1BD3B6CB33}
+		{C42DB89F-B651-46A5-9999-F93AF70B71C5} = {8F7B1153-A1E0-45B1-9EDC-0A1BD3B6CB33}
+		{956B80FA-8B16-4924-90C6-7ED1BBABA4C6} = {8C328D96-F81A-4552-A3B5-7AB1747D2BB8}
+		{BF568961-9497-44D7-ADC0-FC296C4EEF47} = {C42DB89F-B651-46A5-9999-F93AF70B71C5}
+		{7978F7EE-AD76-48D2-BF1B-B7927E83BCCF} = {D5CE8753-1135-4399-8BAB-00A9076836AF}
+		{376E96AD-F89F-4140-B00B-9A154B1A69C1} = {8C328D96-F81A-4552-A3B5-7AB1747D2BB8}
 	EndGlobalSection
 EndGlobal

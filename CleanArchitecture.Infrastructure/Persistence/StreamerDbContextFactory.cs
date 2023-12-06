@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore.Design;
 using Microsoft.Extensions.Logging;
 
-namespace CleanArchitecture.Data;
+namespace CleanArchitecture.Infrastructure.Persistence;
 
 public class StreamerDbContextFactory : IDesignTimeDbContextFactory<StreamerDbContext>
 {
