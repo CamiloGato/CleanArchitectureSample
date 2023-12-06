@@ -7,6 +7,7 @@ using CleanArchitecture.Infrastructure.Repositories;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 
 namespace CleanArchitecture.Infrastructure;
 
@@ -30,6 +31,7 @@ public static class InfrastructureServiceRegistration
                 configuration.GetSection("EmailSettings")
         );
         services.AddTransient(typeof(IEmailService), typeof(EmailService));
+        services.AddSingleton<ILogger>(provider => provider.GetService<ILogger>()!);
         
         return services;
     }

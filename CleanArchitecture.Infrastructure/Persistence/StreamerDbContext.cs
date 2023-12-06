@@ -15,11 +15,11 @@ public class StreamerDbContext(DbContextOptions<StreamerDbContext> options) : Db
             {
                 case EntityState.Added:
                     entry.Entity.CreatedBy = "system";
-                    entry.Entity.CreatedDate = DateTime.Now;
+                    entry.Entity.CreatedDate = DateTime.UtcNow;
                     break;
                 case EntityState.Modified:
                     entry.Entity.LastModifiedBy = "system";
-                    entry.Entity.LastModifiedDate = DateTime.Now;
+                    entry.Entity.LastModifiedDate = DateTime.UtcNow;
                     break;
             }
         }
@@ -34,7 +34,7 @@ public class StreamerDbContext(DbContextOptions<StreamerDbContext> options) : Db
             .WithOne(m => m.Streamer)
             .HasForeignKey(m => m.StreamerId)
             .IsRequired()
-            .OnDelete(DeleteBehavior.Restrict);
+            .OnDelete(DeleteBehavior.Cascade);
 
         modelBuilder.Entity<Video>()
             .HasMany(v => v.Actors)
